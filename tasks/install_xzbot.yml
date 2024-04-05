@@ -1,0 +1,15 @@
+- name: Install golang
+  ansible.builtin.package:
+    name:
+      - golang
+    state: present
+
+- name: Install xzbot
+  ansible.builtin.shell: |
+    go install github.com/amlweems/xzbot@latest
+
+- name: Add xzbot to PATH
+  ansible.builtin.lineinfile:
+    path: /root/.bashrc
+    line: PATH=$PATH:/root/go/bin
+    insertafter: EOF

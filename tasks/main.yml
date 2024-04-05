@@ -1,0 +1,41 @@
+---
+- name: Gather facts if needed
+  ansible.builtin.setup:
+  when: ansible_os_family is not defined
+
+- name: Check for Debian
+  ansible.builtin.fail:
+    msg: This role only supports Debian based distros
+  when: ansible_os_family != "Debian"
+
+- name: Check action
+  ansible.builtin.fail:
+    msg: "Define either ludus_xz_backdoor_install_backdoor or ludus_xz_backdoor_uninstall_backdoor, not both"
+  when:
+    - ludus_xz_backdoor_install_backdoor is defined
+    - ludus_xz_backdoor_install_backdoor
+    - ludus_xz_backdoor_uninstall_backdoor is defined
+    - ludus_xz_backdoor_uninstall_backdoor
+
+- name: Install backdoor
+  ansible.builtin.include_tasks:
+    file: install_backdoor.yml
+  when:
+    - ludus_xz_backdoor_install_backdoor is defined
+    - ludus_xz_backdoor_install_backdoor
+
+- name: Uninstall backdoor
+  ansible.builtin.include_tasks:
+    file: uninstall_backdoor.yml
+  when:
+    - ludus_xz_backdoor_uninstall_backdoor is defined
+    - ludus_xz_backdoor_uninstall_backdoor
+
+- name: Install xzbot
+  ansible.builtin.include_tasks:
+    file: install_xzbot.yml
+  when: ludus_xz_backdoor_install_xzbot
+
+- name: Success
+  ansible.builtin.debug:
+    msg: "ludus_xz_backoor role complete"

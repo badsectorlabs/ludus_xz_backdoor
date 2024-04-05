@@ -1,0 +1,30 @@
+- name: Find the legit liblzma
+  ansible.builtin.find:
+    paths: /usr/lib/x86_64-linux-gnu
+    patterns:
+      - 'liblzma.so.5*'
+    recurse: false
+    file_type: file
+  register: legit_liblzma
+
+- name: Check legit liblzma
+  ansible.builtin.assert:
+    that:
+      - legit_liblzma.files is defined
+      - legit_liblzma.files | length > 0
+      - legit_liblzma.files[0].path is defined
+
+- name: Symlink the legit liblzma to liblzma.so.5
+  ansible.builtin.file:
+    src: "{{ legit_liblzma.files[0].path }}"
+    dest: /usr/lib/x86_64-linux-gnu/liblzma.so.5
+    owner: root
+    group: root
+    state: link
+    force: true
+  become: true
+  register: create_symlink
+
+- name: Reboot if needed
+  ansible.builtin.reboot:
+  when: create_symlink.changed

@@ -1,0 +1,32 @@
+---
+dependencies: []
+
+galaxy_info:
+  role_name: ludus_xz_backdoor
+  author: badsectorlabs
+  description: An Ansible Role that installs the xz backdoor (CVE-2024-3094) on a Debian host and optionally configures the xzbot tool on a Debian based host.
+  company: Bad Sector Labs
+  license: GPLv3
+  min_ansible_version: "2.10"
+  platforms:
+    - name: Debian
+      versions:
+        - buster
+        - bullseye
+        - bookworm
+    - name: Ubuntu
+      versions:
+        - bionic
+        - focal
+        - jammy
+    - name: Kali
+      versions:
+        - all
+  galaxy_tags:
+    - xz
+    - xzbot
+    - backdoor
+    - malware
+    - ludus
+
+collections: [] # Add any collections needed here

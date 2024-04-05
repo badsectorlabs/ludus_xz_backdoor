@@ -1,0 +1,14 @@
+ludus:
+  - vm_name: "{{ range_id }}-xz-backdoor"
+    hostname: "{{ range_id }}-xz-backdoor"
+    template: debian-12-x64-server-template
+    vlan: 10
+    ip_last_octet: 2
+    ram_gb: 2
+    cpus: 2
+    linux: true
+    roles:
+      - badsectorlabs.ludus_xz_backdoor
+    role_vars:
+      ludus_xz_backdoor_install_xzbot: true
+      ludus_xz_backdoor_install_backdoor: true
