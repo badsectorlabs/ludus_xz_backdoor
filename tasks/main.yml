@@ -32,8 +32,10 @@
     - ludus_xz_backdoor_uninstall_backdoor
 
 - name: Install xzbot
-  ansible.builtin.include_tasks:
-    file: install_xzbot.yml
+  ansible.builtin.copy:
+    src: xzbot
+    dest: /usr/bin/xzbot
+    mode: "0755"
   when: ludus_xz_backdoor_install_xzbot
 
 - name: Success

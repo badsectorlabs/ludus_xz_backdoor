@@ -16,7 +16,7 @@ Debian based OS
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
-    # Install the xzbot cli tool to send commands to the backdoor. The xzbot tool is added to root's PATH automatically
+    # Install the xzbot cli tool used to send commands to the backdoor. It is installed to /usr/bin/xzbot
     ludus_xz_backdoor_install_xzbot: true
     # Install the xz backdoor library by linking it to liblzma.so.5 used by the system and rebooting
     ludus_xz_backdoor_install_backdoor: true
